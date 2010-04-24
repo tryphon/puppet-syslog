@@ -15,6 +15,11 @@ class syslog::remote {
     ensure => running
   }
 
+  file { "/etc/logrotate.d/rsyslog":
+    source => "puppet:///syslog/rsyslog.logrotate",
+    require => Package[rsyslog]
+  }
+
   # send messages to nas.studio.priv
   line { syslog_to_admin:
     file => "/etc/rsyslog.conf",
