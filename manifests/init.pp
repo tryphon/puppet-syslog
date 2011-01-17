@@ -20,11 +20,18 @@ class syslog::remote {
     require => Package[rsyslog]
   }
 
-  # send messages to nas.studio.priv
-  line { syslog_to_admin:
-    file => "/etc/rsyslog.conf",
-    line => "*.*             @$syslog_server",
+  file { "/etc/rsyslog.conf":
+    content => template("syslog/rsyslog.conf"),
+    require => Package[rsyslog],
     notify => Service[rsyslog]
+  }
+
+  include syslog::remote::tiger
+}
+
+class syslog::remote::tiger {
+  if $tiger_enabled {
+    tiger::ignore { rsyslog: }
   }
 }
 
