@@ -4,6 +4,8 @@ class syslog {
   } else {
     include syslog::remote
   }
+
+  include syslog::helper
 }
 
 class syslog::remote {
@@ -51,4 +53,10 @@ class syslog::ng {
     require => Package[syslog-ng]
   }
 
+}
+
+class syslog::helper {
+  file { "/usr/local/bin/syslog":
+    source => "puppet:///syslog/syslog.sh"
+  }
 }
