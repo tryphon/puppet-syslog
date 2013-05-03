@@ -53,6 +53,14 @@ class syslog::ng {
     require => Package[syslog-ng]
   }
 
+  file { "/etc/logrotate.d/syslog-ng":
+    source => "puppet:///syslog/syslog-ng.logrotate",
+    require => [Package[syslog-ng], File["/var/log/archives"]]
+  }
+
+  file { "/var/log/archives":
+    ensure => directory
+  }
 }
 
 class syslog::helper {
