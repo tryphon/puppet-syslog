@@ -68,3 +68,11 @@ class syslog::helper {
     source => "puppet:///syslog/syslog.sh"
   }
 }
+
+class rsyslog::module::file {
+  file { "/etc/rsyslog.d/00imfile.conf":
+    content => '$ModLoad imfile',
+    require => Package[rsyslog],
+    notify => Service[rsyslog]
+  }
+}
