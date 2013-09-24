@@ -19,7 +19,8 @@ class syslog::remote {
 
   file { "/etc/logrotate.d/rsyslog":
     source => "puppet:///syslog/rsyslog.logrotate",
-    require => Package[rsyslog]
+    require => Package[rsyslog],
+    mode => 644
   }
 
   file { "/etc/rsyslog.conf":
@@ -48,14 +49,15 @@ class syslog::ng {
     notify => Service[syslog-ng]
   }
 
-  service { syslog-ng:
+  service { "syslog-ng":
     ensure => running,
     require => Package[syslog-ng]
   }
 
   file { "/etc/logrotate.d/syslog-ng":
     source => "puppet:///syslog/syslog-ng.logrotate",
-    require => [Package[syslog-ng], File["/var/log/archives"]]
+    require => [Package[syslog-ng], File["/var/log/archives"]],
+    mode => 644
   }
 
   file { "/var/log/archives":
