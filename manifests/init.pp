@@ -19,7 +19,7 @@ class syslog::remote {
 
   file { '/etc/logrotate.d/rsyslog':
     source => 'puppet:///syslog/rsyslog.logrotate',
-    require => [Package['rsyslog'], File['/usr/local/sbin/rsyslog-postrotate']]
+    require => [Package['rsyslog'], File['/usr/local/sbin/rsyslog-postrotate']],
     mode => 644
   }
 
