@@ -17,10 +17,16 @@ class syslog::remote {
     ensure => running
   }
 
-  file { "/etc/logrotate.d/rsyslog":
-    source => "puppet:///syslog/rsyslog.logrotate",
-    require => Package[rsyslog],
+  file { '/etc/logrotate.d/rsyslog':
+    source => 'puppet:///syslog/rsyslog.logrotate',
+    require => [Package['rsyslog'], File['/usr/local/sbin/rsyslog-postrotate']]
     mode => 644
+  }
+
+  file { '/usr/local/sbin/rsyslog-postrotate':
+    source => 'puppet:///syslog/rsyslog.logrotate',
+    mode => 755,
+    require => Package['rsyslog']
   }
 
   file { "/etc/rsyslog.conf":
