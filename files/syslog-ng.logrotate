@@ -130,7 +130,7 @@
    daily
    compress
    delaycompress
-   olddir /var/log/archives
+   dateext
    postrotate
       /usr/sbin/invoke-rc.d syslog-ng reload >/dev/null
    endscript
