@@ -64,7 +64,7 @@ class syslog::ng {
 
   file { "/etc/logrotate.d/syslog-ng":
     source => "puppet:///syslog/syslog-ng.logrotate",
-    require => [Package[syslog-ng], File["/var/log/archives"]],
+    require => Package[syslog-ng],
     mode => 644
   }
 
