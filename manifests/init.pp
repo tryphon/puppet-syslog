@@ -68,7 +68,7 @@ class syslog::ng {
     mode => 644
   }
 
-  file { ['/srv/log', '/srv/log/archives']:
+  file { '/srv/log':
     ensure => directory
   }
 
