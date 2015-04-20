@@ -125,7 +125,7 @@
    delaycompress
 }
 
-/var/log/syslog {
+/srv/log/syslog {
    rotate 365
    daily
    compress
