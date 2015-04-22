@@ -4,6 +4,7 @@
    compress
    delaycompress
    dateext
+   create 0644 root adm
    postrotate
       /usr/sbin/invoke-rc.d syslog-ng reload >/dev/null
    endscript

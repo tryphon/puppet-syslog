@@ -71,12 +71,14 @@ class syslog::ng {
   file { '/srv/log':
     ensure => directory
   }
-
+  file { '/srv/log/syslog':
+    ensure => present,
+    mode => 644
+  }
   file { '/var/log/syslog':
     ensure => link,
     target => '/srv/log/syslog'
   }
-
 }
 
 class syslog::helper {
