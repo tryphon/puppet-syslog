@@ -73,6 +73,7 @@ class syslog::ng {
   }
   file { '/srv/log/syslog':
     ensure => present,
+    group => adm,
     mode => 644
   }
   file { '/var/log/syslog':
