@@ -20,13 +20,13 @@ class syslog::remote {
   }
 
   file { '/etc/logrotate.d/rsyslog':
-    source => 'puppet:///syslog/rsyslog.logrotate',
+    source => 'puppet:///modules/syslog/rsyslog.logrotate',
     require => [Package['rsyslog'], File['/usr/local/sbin/rsyslog-postrotate']],
     mode => 644
   }
 
   file { '/usr/local/sbin/rsyslog-postrotate':
-    source => 'puppet:///syslog/rsyslog-postrotate',
+    source => 'puppet:///modules/syslog/rsyslog-postrotate',
     mode => 755,
     require => Package['rsyslog']
   }
@@ -52,7 +52,7 @@ class syslog::ng {
   }
 
   file { "/etc/syslog-ng/syslog-ng.conf":
-    source => "puppet:///syslog/syslog-ng.conf",
+    source => "puppet:///modules/syslog/syslog-ng.conf",
     require => Package[syslog-ng],
     notify => Service[syslog-ng]
   }
@@ -63,7 +63,7 @@ class syslog::ng {
   }
 
   file { "/etc/logrotate.d/syslog-ng":
-    source => "puppet:///syslog/syslog-ng.logrotate",
+    source => "puppet:///modules/syslog/syslog-ng.logrotate",
     require => Package[syslog-ng],
     mode => 644
   }
@@ -84,7 +84,7 @@ class syslog::ng {
 
 class syslog::helper {
   file { "/usr/local/bin/syslog":
-    source => "puppet:///syslog/syslog.sh"
+    source => "puppet:///modules/syslog/syslog.sh"
   }
 }
 
