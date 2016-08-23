@@ -46,25 +46,25 @@ class syslog::remote::tiger {
   }
 }
 
-class syslog::ng {
-  package { syslog-ng:
+class syslog::ng($forwarder = false, $keep_hostname = false) {
+  package { 'syslog-ng-core':
     alias => syslog
   }
 
   file { "/etc/syslog-ng/syslog-ng.conf":
     source => "puppet:///modules/syslog/syslog-ng.conf",
-    require => Package[syslog-ng],
+    require => Package['syslog-ng-core'],
     notify => Service[syslog-ng]
   }
 
-  service { "syslog-ng":
+  service { 'syslog-ng':
     ensure => running,
-    require => Package[syslog-ng]
+    require => Package['syslog-ng-core']
   }
 
   file { "/etc/logrotate.d/syslog-ng":
     source => "puppet:///modules/syslog/syslog-ng.logrotate",
-    require => Package[syslog-ng],
+    require => Package['syslog-ng-core'],
     mode => 644
   }
 
@@ -79,6 +79,34 @@ class syslog::ng {
   file { '/var/log/syslog':
     ensure => link,
     target => '/srv/log/syslog'
+  }
+
+  syslog::ng::conf { 'source':
+    content => template('syslog/syslog-ng-source')
+  }
+
+  if $forwarder {
+    syslog::ng::conf { 'forwarder':
+      content => "destination d_loghost { udp(\"$forwarder\" port(514)); };\nlog { source(s_all); destination(d_loghost); };"
+    }
+  }
+
+  define conf($source = false, $content = false) {
+    $filename = "/etc/syslog-ng/conf.d/$name.conf"
+
+    if $content {
+      file { $filename:
+        content => $content,
+        require => Package['syslog'],
+        notify => Service['syslog-ng']
+      }
+    } else {
+      file { $filename:
+        source => $source,
+        require => Package['syslog'],
+        notify => Service['syslog-ng']
+      }
+    }
   }
 }
 
