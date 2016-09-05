@@ -1,5 +1,5 @@
 /srv/log/syslog {
-   rotate 365
+   rotate 15
    daily
    compress
    delaycompress
