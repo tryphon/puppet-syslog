@@ -87,7 +87,7 @@ class syslog::ng($forwarder = false, $keep_hostname = false) {
 
   if $forwarder {
     syslog::ng::conf { 'forwarder':
-      content => "destination d_loghost { udp(\"$forwarder\" port(514)); };\nlog { source(s_all); destination(d_loghost); };"
+      content => "destination d_forwarder { udp(\"$forwarder\" port(514)); };\nlog { source(s_all); destination(d_forwarder); };"
     }
   }
 
