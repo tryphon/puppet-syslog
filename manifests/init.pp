@@ -46,7 +46,7 @@ class syslog::remote::tiger {
   }
 }
 
-class syslog::ng($forwarder = false, $keep_hostname = false) {
+class syslog::ng($forwarder = false, $forwarder_port = 514, $keep_hostname = false) {
   package { 'syslog-ng-core':
     alias => syslog
   }
@@ -87,7 +87,7 @@ class syslog::ng($forwarder = false, $keep_hostname = false) {
 
   if $forwarder {
     syslog::ng::conf { 'forwarder':
-      content => "destination d_loghost { udp(\"$forwarder\" port(514)); };\nlog { source(s_all); destination(d_loghost); };"
+      content => "destination d_loghost { udp(\"$forwarder\" port(${forwarder_port})); };\nlog { source(s_all); destination(d_loghost); };"
     }
   }
 
