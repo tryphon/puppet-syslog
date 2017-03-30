@@ -8,5 +8,5 @@ source s_all {
         file("/proc/kmsg" program_override("kernel"));
         # use the following line if you want to receive remote UDP logging messages
         # (this is equivalent to the "-r" syslogd flag)
-        udp(<%= "keep-hostname(yes)" if keep_hostname %>);
+        udp(<%= "keep-hostname(yes)" if @keep_hostname %>);
 };
