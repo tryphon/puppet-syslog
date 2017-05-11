@@ -1,4 +1,6 @@
-class syslog::remote {
+class syslog::remote (
+  $syslog_servers = undef,
+  ) {
   package { rsyslog:
     alias => syslog
   }
