@@ -3,7 +3,9 @@ class syslog($syslog_server = $fqdn) {
     if ($syslog_server == $fqdn or $syslog_server == $ipaddress) {
       include syslog::ng
     } else {
-      include syslog::remote
+      class { 'syslog::remote':
+        syslog_servers => $syslog_server,
+      }
     }
   }
 
